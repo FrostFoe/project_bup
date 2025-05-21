@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Male vs Female Average Monthly Income by Occupation (Bangladesh, 2016)</title>
+
+  <!-- Google Charts Loader -->
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <!-- Styles -->
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f2f5;
+      color: #333;
+      margin: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1, h2 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .chart-container {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      margin-top: 20px;
+      width: 100%;
+      max-width: 1000px;
+      box-sizing: border-box;
+    }
+
+    #male_female_comparison_chart_div {
+      width: 100%;
+      height: 550px;
+    }
+
+    p {
+      max-width: 900px;
+      text-align: center;
+      color: #555;
+      line-height: 1.6;
+      margin-top: 10px;
+    }
+  </style>
+
+  <!-- Google Charts Script -->
+  <script>
+    google.charts.load('current', { packages: ['corechart', 'bar'] });
+    google.charts.setOnLoadCallback(drawIncomeComparisonChart);
+
+    function drawIncomeComparisonChart() {
+      const data = google.visualization.arrayToDataTable([
+        ['Occupation', 'Male Income', 'Female Income'],
+        ['Managers, Professionals & Technicians', 27009, 23580],
+        ['Service & Sales', 11953, 11175],
+        ['Cultural, Forestry & Fishery', 9553, 7753],
+        ['Craft & Related Trades', 10730, 9777],
+        ['Plant & Machine Operators', 12165, 11236],
+        ['Elementary Jobs', 8773, 7257],
+        ['Other Sectors', 26398, 22444]
+      ]);
+
+      const options = {
+        title: 'Average Monthly Income by Occupation - Male vs Female (Bangladesh, 2016)',
+        titleTextStyle: {
+          color: '#2c3e50',
+          fontSize: 20,
+          bold: true
+        },
+        chartArea: {
+          width: '65%',
+          left: 200
+        },
+        hAxis: {
+          title: 'Income (BDT)',
+          minValue: 0,
+          textStyle: { color: '#555' },
+          titleTextStyle: { color: '#333' }
+        },
+        vAxis: {
+          title: 'Occupation',
+          textStyle: { color: '#555' },
+          titleTextStyle: { color: '#333' }
+        },
+        bars: 'horizontal',
+        colors: ['#3498db', '#e74c3c'], // Blue for Male, Red for Female
+        legend: {
+          position: 'top',
+          alignment: 'center',
+          textStyle: {
+            color: '#333',
+            fontSize: 13
+          }
+        },
+        bar: {
+          groupWidth: '75%'
+        },
+        animation: {
+          startup: true,
+          duration: 1500,
+          easing: 'out'
+        },
+        tooltip: {
+          textStyle: { fontSize: 12 }
+        }
+      };
+
+      const chart = new google.visualization.BarChart(document.getElementById('male_female_comparison_chart_div'));
+      chart.draw(data, options);
+    }
+  </script>
+</head>
+
+<body>
+
+  <h1>Male vs Female Average Monthly Income</h1>
+  <h2>By Occupation in Bangladesh (2016)</h2>
+
+  <div class="chart-container">
+    <div id="male_female_comparison_chart_div"></div>
+  </div>
+
+  <p>
+    This interactive chart compares the average monthly wage or salary income between men and women across different
+    occupational groups in Bangladesh, based on 2016 data. The aim is to visually highlight the gender income gap within
+    the workforce.
+  </p>
+
+  <p>
+    A smooth animation on load enhances the storytelling and viewer engagement.
+  </p>
+
+</body>
+
+</html>
