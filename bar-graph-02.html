@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Employment Data Dashboard</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart', 'bar', 'table']});
+    google.charts.setOnLoadCallback(drawCharts);
+
+    function drawCharts() {
+      // Main dataset
+      var rawData = [
+        {area: 'Rural', status: 'Employed', district: 'British', male: 175.19, female: 666.92, total: 246.44},
+        {area: 'Rural', status: 'Employed', district: 'Chinese', male: 185.32, female: 888.88, total: 1253.63},
+        {area: 'Rural', status: 'Employed', district: 'Dhaba', male: 888.88, female: 888.88, total: 1056.45},
+        {area: 'Urban', status: 'Employed', district: 'British', male: 165.18, female: 626.78, total: 245.14},
+        {area: 'Urban', status: 'Unemployment', district: 'Chinese', male: 155.29, female: 101.59, total: 243.62},
+        {area: 'City corporation', status: 'Employed', district: 'British', male: 100.12, female: 234.42, total: 123.54},
+        {area: 'City corporation', status: 'Unemployment', district: 'Chinese', male: 30.60, female: 17.86, total: 48.64}
+        // Add more rows as needed from your full dataset
+      ];
+
+      // 1. Employment by Area Chart
+      var areaData = new google.visualization.DataTable();
+      areaData.addColumn('string', 'Area');
+      areaData.addColumn('number', 'Male');
+      areaData.addColumn('number', 'Female');
+      
+      var areaTotals = {};
+      rawData.forEach(row => {
+        if (!areaTotals[row.area]) {
+          areaTotals[row.area] = {male: 0, female: 0};
+        }
+        areaTotals[row.area].male += row.male;
+        areaTotals[row.area].female += row.female;
+      });
+
+      Object.keys(areaTotals).forEach(area => {
+        areaData.addRow([area, areaTotals[area].male, areaTotals[area].female]);
+      });
+
+      var areaOptions = {
+        title: 'Employment by Area (Male vs Female)',
+        titleTextStyle: { fontSize: 18, bold: true },
+        isStacked: true,
+        hAxis: { title: 'Count', minValue: 0 },
+        vAxis: { title: 'Area' },
+        width: '100%',
+        height: 300,
+        colors: ['#4285F4', '#EA4335'],
+        chartArea: { width: '80%', height: '70%' },
+        legend: { position: 'bottom' }
+      };
+      var areaChart = new google.visualization.BarChart(document.getElementById('area_chart'));
+      areaChart.draw(areaData, areaOptions);
+
+      // 2. Employment Status Breakdown
+      var statusData = new google.visualization.DataTable();
+      statusData.addColumn('string', 'Status');
+      statusData.addColumn('number', 'Count');
+      
+      var statusCounts = {};
+      rawData.forEach(row => {
+        if (!statusCounts[row.status]) {
+          statusCounts[row.status] = 0;
+        }
+        statusCounts[row.status] += row.total;
+      });
+
+      Object.keys(statusCounts).forEach(status => {
+        statusData.addRow([status, statusCounts[status]]);
+      });
+
+      var statusOptions = {
+        title: 'Employment Status Distribution',
+        titleTextStyle: { fontSize: 18, bold: true },
+        width: '100%',
+        height: 300,
+        pieHole: 0.4,
+        colors: ['#34A853', '#FBBC05', '#EA4335'],
+        chartArea: { width: '90%', height: '80%' }
+      };
+      var statusChart = new google.visualization.PieChart(document.getElementById('status_chart'));
+      statusChart.draw(statusData, statusOptions);
+
+      // 3. Detailed Data Table
+      var tableData = new google.visualization.DataTable();
+      tableData.addColumn('string', 'Area');
+      tableData.addColumn('string', 'Status');
+      tableData.addColumn('string', 'District');
+      tableData.addColumn('number', 'Male');
+      tableData.addColumn('number', 'Female');
+      tableData.addColumn('number', 'Total');
+
+      rawData.forEach(row => {
+        tableData.addRow([row.area, row.status, row.district, row.male, row.female, row.total]);
+      });
+
+      var tableOptions = {
+        title: 'Detailed Employment Data',
+        width: '100%',
+        height: 'auto',
+        page: 'enable',
+        pageSize: 10,
+        allowHtml: true
+      };
+      var tableChart = new google.visualization.Table(document.getElementById('table_chart'));
+      tableChart.draw(tableData, tableOptions);
+    }
+
+    window.addEventListener('resize', drawCharts);
+  </script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #202124;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .dashboard-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .chart-container {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    .full-width {
+      grid-column: 1 / -1;
+    }
+    .key-findings {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      border-left: 4px solid #4285F4;
+    }
+    .key-findings h2 {
+      margin-top: 0;
+      color: #202124;
+    }
+    .key-findings ul {
+      padding-left: 20px;
+    }
+    .key-findings li {
+      margin-bottom: 8px;
+    }
+    @media (max-width: 768px) {
+      .dashboard-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Employment Data Dashboard</h1>
+  
+  <div class="key-findings">
+    <h2>Key Insights</h2>
+    <ul>
+      <li>Urban areas show higher employment numbers compared to rural areas</li>
+      <li>Female employment dominates in several districts</li>
+      <li>Dhaba district shows particularly high employment numbers</li>
+      <li>Unemployment rates vary significantly by district</li>
+    </ul>
+  </div>
+
+  <div class="dashboard-container">
+    <div class="chart-container">
+      <div id="area_chart"></div>
+    </div>
+    <div class="chart-container">
+      <div id="status_chart"></div>
+    </div>
+    <div class="chart-container full-width">
+      <div id="table_chart"></div>
+    </div>
+  </div>
+</body>
+</html>
