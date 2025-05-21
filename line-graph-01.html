@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bangladesh Unemployment Rate Dashboard</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart', 'bar']});
+    google.charts.setOnLoadCallback(drawCharts);
+
+    function drawCharts() {
+      // Full dataset
+      var fullData = [
+        ['2000', 3.27, 10.73, 0.89, 11.05, 10.29, 3.24, 3.32],
+        ['2003', 4.32, 6.63, 3.48, 6.99, 5.83, 4.17, 4.85],
+        ['2005', 4.25, 9.27, 2.80, 8.00, 13.60, 3.35, 7.03],
+        ['2006', 3.59, 7.60, 2.45, 6.12, 12.58, 2.66, 6.44],
+        ['2010', 3.38, 6.36, 2.49, 5.95, 7.02, 2.95, 4.36],
+        ['2013', 4.43, 9.88, 2.87, 10.08, 9.61, 3.15, 7.41],
+        ['2016', 4.35, 11.37, 2.83, 10.11, 14.08, 3.09, 7.29],
+        ['2017', 4.37, 12.76, 2.60, 10.78, 16.80, 3.32, 6.68],
+        ['2022', 4.59, 11.47, 2.77, 14.92, 7.89, 4.43, 4.89],
+        ['2023', 3.35, 8.24, 2.09, 11.52, 4.72, 3.41, 3.24]
+      ];
+
+      // 1. Main Trends Chart
+      var trendData = new google.visualization.DataTable();
+      trendData.addColumn('string', 'Year');
+      trendData.addColumn('number', 'Total (15+)');
+      trendData.addColumn('number', 'Youth (15-24)');
+      trendData.addColumn('number', 'Adults (25+)');
+      
+      for (var i = 0; i < fullData.length; i++) {
+        trendData.addRow([fullData[i][0], fullData[i][1], fullData[i][2], fullData[i][3]]);
+      }
+
+      var trendOptions = {
+        title: 'Unemployment Rate Trends (2000-2023)',
+        titleTextStyle: { fontSize: 18, bold: true },
+        curveType: 'function',
+        legend: { position: 'bottom', textStyle: { fontSize: 12 } },
+        hAxis: { 
+          title: 'Year', 
+          titleTextStyle: { fontSize: 14 },
+          textStyle: { fontSize: 12 }
+        },
+        vAxis: { 
+          title: 'Rate (%)', 
+          titleTextStyle: { fontSize: 14 },
+          textStyle: { fontSize: 12 },
+          minValue: 0,
+          maxValue: 18
+        },
+        width: '100%',
+        height: 400,
+        colors: ['#4285F4', '#EA4335', '#FBBC05'],
+        chartArea: { width: '85%', height: '70%' },
+        fontSize: 12,
+        tooltip: { textStyle: { fontSize: 12 } }
+      };
+      var trendChart = new google.visualization.LineChart(document.getElementById('trend_chart'));
+      trendChart.draw(trendData, trendOptions);
+
+      // 2. Gender Comparison Chart
+      var genderData = new google.visualization.DataTable();
+      genderData.addColumn('string', 'Year');
+      genderData.addColumn('number', 'Male (15-24)');
+      genderData.addColumn('number', 'Female (15-24)');
+      
+      for (var i = 0; i < fullData.length; i++) {
+        genderData.addRow([fullData[i][0], fullData[i][4], fullData[i][5]]);
+      }
+
+      var genderOptions = {
+        title: 'Youth Unemployment by Gender (15-24)',
+        titleTextStyle: { fontSize: 18, bold: true },
+        legend: { position: 'bottom', textStyle: { fontSize: 12 } },
+        hAxis: {
+          title: 'Year',
+          titleTextStyle: { fontSize: 14 },
+          textStyle: { fontSize: 12 }
+        },
+        vAxis: {
+          title: 'Rate (%)',
+          titleTextStyle: { fontSize: 14 },
+          textStyle: { fontSize: 12 },
+          minValue: 0,
+          maxValue: 18
+        },
+        width: '100%',
+        height: 400,
+        colors: ['#4285F4', '#EA4335'],
+        chartArea: { width: '85%', height: '70%' },
+        fontSize: 12,
+        tooltip: { textStyle: { fontSize: 12 } }
+      };
+      var genderChart = new google.visualization.ColumnChart(document.getElementById('gender_chart'));
+      genderChart.draw(genderData, genderOptions);
+
+      // 3. 2023 Detailed Breakdown
+      var currentData = new google.visualization.DataTable();
+      currentData.addColumn('string', 'Category');
+      currentData.addColumn('number', 'Rate (%)');
+      currentData.addColumn({ type: 'string', role: 'style' });
+      
+      currentData.addRows([
+        ['Total (15+)', 3.35, '#4285F4'],
+        ['Youth (15-24)', 8.24, '#EA4335'],
+        ['Adults (25+)', 2.09, '#FBBC05'],
+        ['Male Youth', 11.52, '#34A853'],
+        ['Female Youth', 4.72, '#673AB7'],
+        ['Male Adults', 1.84, '#FF6D00'],
+        ['Female Adults', 2.64, '#009688']
+      ]);
+
+      var currentOptions = {
+        title: '2023 Detailed Unemployment Breakdown',
+        titleTextStyle: { fontSize: 18, bold: true },
+        legend: 'none',
+        hAxis: {
+          title: 'Unemployment Rate (%)',
+          titleTextStyle: { fontSize: 14 },
+          textStyle: { fontSize: 12 },
+          minValue: 0
+        },
+        width: '100%',
+        height: 500,
+        chartArea: { width: '75%', height: '80%' },
+        fontSize: 12,
+        tooltip: { textStyle: { fontSize: 12 } },
+        annotations: {
+          alwaysOutside: true,
+          textStyle: {
+            fontSize: 12,
+            color: '#000',
+            auraColor: 'none'
+          }
+        }
+      };
+      var currentChart = new google.visualization.BarChart(document.getElementById('current_chart'));
+      currentChart.draw(currentData, currentOptions);
+    }
+
+    window.addEventListener('resize', function() {
+      drawCharts();
+    });
+  </script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+      line-height: 1.6;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #202124;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+    .dashboard-section {
+      margin-bottom: 40px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    .chart-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #202124;
+    }
+    .chart-container {
+      width: 100%;
+      margin-top: 20px;
+    }
+    .key-findings {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      border-left: 4px solid #4285F4;
+    }
+    .key-findings h2 {
+      margin-top: 0;
+      color: #202124;
+    }
+    .key-findings ul {
+      padding-left: 20px;
+    }
+    .key-findings li {
+      margin-bottom: 10px;
+    }
+    .data-source {
+      text-align: center;
+      margin-top: 30px;
+      color: #666;
+      font-size: 14px;
+    }
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      .dashboard-section {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Bangladesh Unemployment Rate Dashboard</h1>
+  
+  <div class="key-findings">
+    <h2>Key Findings</h2>
+    <ul>
+      <li><strong>Youth unemployment (15-24)</strong> remains 2-4 times higher than adult rates</li>
+      <li><strong>Male youth unemployment</strong> peaked at 14.92% in 2022 before dropping to 11.52% in 2023</li>
+      <li><strong>Female youth unemployment</strong> decreased dramatically from 16.80% (2017) to 4.72% (2023)</li>
+      <li><strong>Overall improvement</strong> since 2017 across all age groups and genders</li>
+      <li><strong>Gender disparity reversed</strong> - while male rates were lower historically, since 2020 female rates have been significantly lower</li>
+    </ul>
+  </div>
+
+  <div class="dashboard-section">
+    <div class="chart-title">1. Historical Unemployment Trends</div>
+    <div class="chart-container" id="trend_chart"></div>
+  </div>
+
+  <div class="dashboard-section">
+    <div class="chart-title">2. Youth Unemployment Gender Comparison</div>
+    <div class="chart-container" id="gender_chart"></div>
+  </div>
+
+  <div class="dashboard-section">
+    <div class="chart-title">3. 2023 Detailed Breakdown</div>
+    <div class="chart-container" id="current_chart"></div>
+  </div>
+
+  <div class="data-source">
+    <p>Data Source: Bangladesh Labour Force Survey | Visualization powered by Google Charts</p>
+    <p>Note: Some years between displayed data points have been omitted for clarity</p>
+  </div>
+</body>
+</html>
