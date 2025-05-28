@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Bangladesh Taka vs. US Dollar Exchange Rate Trends</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto Slab', serif;
+      background-color: #f4f1de;
+      /* Light Beige */
+      color: #3d405b;
+      /* Independence */
+      margin: 40px;
+      line-height: 1.7;
+    }
+
+    h1 {
+      color: #e07a5f;
+      /* Burnt Sienna */
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 700;
+    }
+
+    .chart-container {
+      width: 98%;
+      max-width: 900px;
+      margin: 30px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    #chart_div {
+      width: 100%;
+      height: 450px;
+    }
+
+    .google-visualization-tooltip {
+      background-color: #f2cc8f !important;
+      /* Mustard */
+      color: #3d405b !important;
+      border: 1px solid #e07a5f !important;
+      padding: 10px !important;
+      border-radius: 5px !important;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawExchangeRateChart);
+
+    function drawExchangeRateChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Period', 'Period Average', 'End Period'],
+        ['2021-22', 86.30, 93.45],
+        ['2022-23', 99.46, 106.00],
+        ['2023-24', 111.06, 118.00]
+      ]);
+
+      var options = {
+        title: 'USD to BDT Exchange Rate Trends',
+        titleTextStyle: { color: '#e07a5f', fontSize: 22, bold: true },
+        hAxis: {
+          title: 'Fiscal Year',
+          titleTextStyle: { color: '#3d405b', italic: false },
+          gridlines: { color: '#f9dec9', count: 3 },
+          ticks: ['2021-22', '2022-23', '2023-24']
+        },
+        vAxis: {
+          title: 'Taka per US Dollar',
+          titleTextStyle: { color: '#3d405b', italic: false },
+          gridlines: { color: '#f9dec9' },
+          minValue: 80
+        },
+        series: {
+          0: { color: '#81b29a', lineWidth: 3, pointShape: 'circle', pointSize: 8, labelInLegend: 'Period Average' }, // Moss Green
+          1: { color: '#f2cc8f', lineWidth: 3, pointShape: 'diamond', pointSize: 8, labelInLegend: 'End Period' }   // Mustard
+        },
+        legend: { position: 'bottom', textStyle: { color: '#3d405b' } },
+        tooltip: { trigger: 'focus' },
+        backgroundColor: 'white',
+        chartArea: { left: '15%', top: '12%', width: '75%', height: '65%' },
+        fontName: 'Roboto Slab',
+        curveType: 'function', // Adds a smooth curve to the lines
+        focusTarget: 'category'
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+  </script>
+</head>
+
+<body>
+  <h1>USD to BDT Exchange Rate Trends</h1>
+  <div class="chart-container">
+    <div id="chart_div"></div>
+  </div>
+</body>
+
+</html>
