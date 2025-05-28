@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Bangladesh Overseas Employment & Remittances</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto Slab', serif;
+      background-color: #f0f8ff;
+      /* Alice Blue */
+      color: #2f4f4f;
+      /* Dark Slate Gray */
+      margin: 40px;
+      line-height: 1.7;
+    }
+
+    h1 {
+      color: #008b8b;
+      /* Dark Cyan */
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 700;
+    }
+
+    .chart-container {
+      width: 98%;
+      /* Increased width */
+      max-width: 1200px;
+      /* Increased max width */
+      margin: 30px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    #chart_div {
+      width: 100%;
+      height: 550px;
+    }
+
+    .google-visualization-tooltip {
+      background-color: #e0ffff !important;
+      /* Light Cyan */
+      color: #008b8b !important;
+      border: 1px solid #4dd0e1 !important;
+      padding: 12px !important;
+      border-radius: 8px !important;
+      box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawMultipleY);
+
+    function drawMultipleY() {
+      var data = google.visualization.arrayToDataTable([
+        ['Period', 'Persons Left (in Lakhs)', 'Remittances (Billion US $)', 'Rem. (Thou. Cr. Taka)'],
+        ['2021-22', 9.89, 21.03, 181.58],
+        ['2022-23', 11.38, 21.61, 215.07],
+        ['2023-24', 11.97, 23.91, 266.16]
+      ]);
+
+      var options = {
+        title: 'Overseas Employment & Remittances Over Time',
+        titleTextStyle: { color: '#008b8b', fontSize: 24, bold: true },
+        hAxis: {
+          title: 'Period',
+          titleTextStyle: { color: '#2f4f4f', italic: false },
+          gridlines: { color: '#b0e0e6', count: 3 },
+          ticks: ['2021-22', '2022-23', '2023-24']
+        },
+        vAxes: {
+          0: {
+            title: 'Persons Left (in Lakhs)',
+            titleTextStyle: { color: '#4682b4', italic: false },
+            textStyle: { color: '#4682b4' }
+          },
+          1: {
+            title: 'Remittances (Billion US $)',
+            titleTextStyle: { color: '#2e8b57', italic: false },
+            textStyle: { color: '#2e8b57' },
+            side: 'right'
+          },
+          2: {
+            title: '', // Removed the title
+            titleTextStyle: { color: '#ff8c00', italic: false, fontSize: 10 },
+            textStyle: { color: '#ff8c00', fontSize: 10 },
+            side: 'right',
+            offset: 90 // Increased offset further
+          }
+        },
+        series: {
+          0: { targetAxisIndex: 0, color: '#4682b4', lineWidth: 3, pointSize: 7 }, // Steel Blue - Persons
+          1: { targetAxisIndex: 1, color: '#2e8b57', lineWidth: 3, pointSize: 7 }, // Sea Green - USD
+          2: { targetAxisIndex: 2, color: '#ff8c00', lineWidth: 3, pointSize: 7 }  // Dark Orange - Taka
+        },
+        legend: { position: 'bottom', textStyle: { color: '#2f4f4f' } },
+        tooltip: { trigger: 'focus' },
+        backgroundColor: 'white',
+        chartArea: { left: '12%', top: '10%', width: '70%', right: '20%', height: '65%' }, // More aggressive chart area adjustment
+        fontName: 'Roboto Slab',
+        focusTarget: 'category'
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Bangladesh Overseas Employment & Remittances</h1>
+  <div class="chart-container">
+    <div id="chart_div"></div>
+  </div>
+</body>
+
+</html>
