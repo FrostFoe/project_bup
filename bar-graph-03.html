@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bangladesh Economic Indicators - Presentation Ready</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0; padding: 20px;
+      background: #f9fafb;
+      font-family: 'Montserrat', sans-serif;
+      color: #2c3e50;
+      display: flex; justify-content: center;
+      align-items: center; height: 100vh;
+    }
+    .chart-container {
+      max-width: 900px;
+      width: 100%;
+      background: #ffffff;
+      padding: 40px 50px;
+      border-radius: 16px;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 600;
+      font-size: 2.4rem;
+      color: #34495e;
+      letter-spacing: 1.1px;
+    }
+    #chart_div {
+      height: 520px;
+    }
+  </style>
+  <script>
+    google.charts.load('current', { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Period', 'Inflation (%)', 'Exports (M US$)', 'Imports (M US$)', 'FX Reserves (M US$)'],
+        ['2022-23', 9.02, 46494.6, 68600.8, 31203],
+        ['2023-24P', 9.73, 44474.8, 63226.17, 26714.24]
+      ]);
+
+      var options = {
+        title: 'Bangladesh Economic Indicators (2022–24)',
+        titleTextStyle: {
+          fontSize: 24,
+          bold: true,
+          color: '#2c3e50',
+          fontName: 'Montserrat'
+        },
+        legend: {
+          position: 'top',
+          alignment: 'center',
+          textStyle: { fontSize: 14, color: '#34495e', fontWeight: '600' }
+        },
+        fontName: 'Montserrat',
+        height: 520,
+        backgroundColor: '#fff',
+        bar: { groupWidth: '60%' },
+        colors: ['#5dade2', '#48c9b0', '#f5b041', '#e74c3c'],
+        hAxis: {
+          textStyle: { fontSize: 14, color: '#34495e' },
+          gridlines: { color: '#ecf0f1' },
+          baselineColor: '#bdc3c7'
+        },
+        vAxis: {
+          format: 'short',
+          textStyle: { fontSize: 14, color: '#34495e' },
+          gridlines: { color: '#ecf0f1' },
+          baselineColor: '#bdc3c7',
+          minValue: 0
+        },
+        tooltip: {
+          textStyle: { fontSize: 14 },
+          showColorCode: true
+        },
+        animation: {
+          startup: true,
+          duration: 1000,
+          easing: 'out'
+        },
+        chartArea: { width: '75%', height: '70%' }
+      };
+
+      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+  </script>
+</head>
+<body>
+  <div class="chart-container">
+    <h1>Bangladesh Economic Indicators</h1>
+    <div id="chart_div"></div>
+  </div>
+</body>
+</html>
