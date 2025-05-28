@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Comprehensive Currency in Circulation Analysis</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f8f9fa;
+      color: #495057;
+      margin: 30px;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #343a40;
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+    .chart-container {
+      width: 95%;
+      max-width: 1000px;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    }
+    #chart_div {
+      width: 100%;
+      height: 550px;
+    }
+    .google-visualization-tooltip {
+      background-color: #e9ecef !important;
+      color: #495057 !important;
+      border: 1px solid #ced4da !important;
+      padding: 12px !important;
+      border-radius: 6px !important;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15) !important;
+    }
+  </style>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['End of Period', 'BB Notes', 'Govt. Notes & Coins', 'Total', 'Outside Banks', 'Within Banks'],
+        ['2021-22', 254519.5, 1663.3, 256182.8, 236449.0, 256182.8 - 236449.0],
+        ['2022-23', 310153.4, 1794.4, 311947.8, 291913.5, 311947.8 - 291913.5],
+        ['2023-24P', 318403.0, 1905.9, 320308.9, 290436.5, 320308.9 - 290436.5]
+      ]);
+
+      var options = {
+        title: 'Comprehensive Currency in Circulation Trends',
+        titleTextStyle: { color: '#343a40', fontSize: 20, bold: true },
+        hAxis: {
+          title: 'End of Period',
+          titleTextStyle: { color: '#6c757d', italic: false },
+          gridlines: { color: '#e0e0e0' }
+        },
+        vAxis: {
+          title: 'Amount (in Thousands)',
+          titleTextStyle: { color: '#6c757d', italic: false },
+          format: 'short',
+          gridlines: { color: '#e0e0e0' }
+        },
+        series: {
+          0: { color: '#007bff', lineWidth: 2, pointSize: 5, visibleInLegend: true, displayName: 'BB Notes' },   // Blue
+          1: { color: '#28a745', lineWidth: 2, pointSize: 5, visibleInLegend: true, displayName: 'Govt. Notes & Coins' },   // Green
+          2: { color: '#6c757d', lineWidth: 3, pointSize: 7, visibleInLegend: true, displayName: 'Total' },   // Gray
+          3: { color: '#dc3545', lineWidth: 2, pointSize: 5, lineDashStyle: [5, 5], visibleInLegend: true, displayName: 'Outside Banks' }, // Red (Dashed)
+          4: { color: '#ffc107', lineWidth: 2, pointSize: 5, lineDashStyle: [5, 5], visibleInLegend: true, displayName: 'Within Banks' }  // Yellow (Dashed)
+        },
+        legend: { position: 'bottom', textStyle: { color: '#495057' } },
+        curveType: 'function',
+        tooltip: { trigger: 'focus' },
+        backgroundColor: 'white',
+        chartArea: { width: '80%', height: '70%' },
+        fontName: 'Montserrat'
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+  </script>
+</head>
+<body>
+  <h1>Comprehensive Currency in Circulation Analysis</h1>
+  <div class="chart-container">
+    <div id="chart_div"></div>
+  </div>
+</body>
+</html>
