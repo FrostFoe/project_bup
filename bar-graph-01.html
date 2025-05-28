@@ -1,144 +1,119 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Male vs Female Average Monthly Income by Occupation (Bangladesh, 2016)</title>
-
-  <!-- Google Charts Loader -->
-  <script src="https://www.gstatic.com/charts/loader.js"></script>
-
-  <!-- Styles -->
+  <title>Per Capita Economic Pulse of Bangladesh</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f0f2f5;
-      color: #333;
-      margin: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      font-family: 'Playfair Display', serif;
+      background-color: #f5f5dc; 
+      color: #543d3d; 
+      margin: 40px;
+      line-height: 1.8;
     }
-
-    h1, h2 {
-      color: #2c3e50;
-      margin-bottom: 10px;
+    h1 {
+      color: #3e2723; 
       text-align: center;
+      margin-bottom: 30px;
+      font-weight: 700;
     }
-
     .chart-container {
+      width: 95%;
+      max-width: 800px;
+      margin: 30px auto;
       background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      padding: 25px;
-      margin-top: 20px;
-      width: 100%;
-      max-width: 1000px;
-      box-sizing: border-box;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      position: relative; 
     }
-
-    #male_female_comparison_chart_div {
+    #chart_div {
       width: 100%;
-      height: 550px;
+      height: 500px;
     }
-
-    p {
-      max-width: 900px;
-      text-align: center;
-      color: #555;
-      line-height: 1.6;
-      margin-top: 10px;
+    .circular-element {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid #8d6e63; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2em;
+      color: #8d6e63;
+      font-weight: bold;
+    }
+    .google-visualization-tooltip {
+      background-color: #e0f2f7 !important; 
+      color: #263238 !important;
+      border: 1px solid #00bcd4 !important;
+      padding: 12px !important;
+      border-radius: 8px !important;
+      box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
     }
   </style>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawCreativeChart);
 
-  <!-- Google Charts Script -->
-  <script>
-    google.charts.load('current', { packages: ['corechart', 'bar'] });
-    google.charts.setOnLoadCallback(drawIncomeComparisonChart);
-
-    function drawIncomeComparisonChart() {
-      const data = google.visualization.arrayToDataTable([
-        ['Occupation', 'Male Income', 'Female Income'],
-        ['Managers, Professionals & Technicians', 27009, 23580],
-        ['Service & Sales', 11953, 11175],
-        ['Cultural, Forestry & Fishery', 9553, 7753],
-        ['Craft & Related Trades', 10730, 9777],
-        ['Plant & Machine Operators', 12165, 11236],
-        ['Elementary Jobs', 8773, 7257],
-        ['Other Sectors', 26398, 22444]
+    function drawCreativeChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Indicator', '2021-22', '2022-23', '2023-24'],
+        ['GDP at Current Price', 231861, 262868, 291547],
+        ['GDP at Constant Price', 177183.3, 187964.5, 195000.8],
+        ['Income at Current Price', 241047, 273360, 304102],
+        ['Income at Constant Price', 184203, 195467, 203398]
       ]);
 
-      const options = {
-        title: 'Average Monthly Income by Occupation - Male vs Female (Bangladesh, 2016)',
-        titleTextStyle: {
-          color: '#2c3e50',
-          fontSize: 20,
-          bold: true
-        },
-        chartArea: {
-          width: '65%',
-          left: 200
-        },
+      var options = {
+        title: 'Per Capita Economic Trends',
+        titleTextStyle: { color: '#3e2723', fontSize: 24, bold: true },
         hAxis: {
-          title: 'Income (BDT)',
-          minValue: 0,
-          textStyle: { color: '#555' },
-          titleTextStyle: { color: '#333' }
+          title: 'Period',
+          titleTextStyle: { color: '#543d3d', italic: false },
+          gridlines: { color: '#d7ccc8', count: 3 },
+          ticks: ['2021-22', '2022-23', '2023-24']
         },
         vAxis: {
-          title: 'Occupation',
-          textStyle: { color: '#555' },
-          titleTextStyle: { color: '#333' }
+          title: 'Amount (in Unit)',
+          titleTextStyle: { color: '#543d3d', italic: false },
+          gridlines: { color: '#d7ccc8' },
+          format: 'short'
         },
-        bars: 'horizontal',
-        colors: ['#3498db', '#e74c3c'], // Blue for Male, Red for Female
-        legend: {
-          position: 'top',
-          alignment: 'center',
-          textStyle: {
-            color: '#333',
-            fontSize: 13
-          }
+        series: {
+          0: { type: 'bars', color: '#a1887f', labelInLegend: 'GDP Current' },   
+          1: { type: 'bars', color: '#c6a7a7', labelInLegend: 'GDP Constant' },  
+          2: { type: 'bars', color: '#64b5f6', labelInLegend: 'Income Current' },
+          3: { type: 'bars', color: '#90caf9', labelInLegend: 'Income Constant' }  
         },
-        bar: {
-          groupWidth: '75%'
-        },
-        animation: {
-          startup: true,
-          duration: 1500,
-          easing: 'out'
-        },
-        tooltip: {
-          textStyle: { fontSize: 12 }
-        }
+        legend: { position: 'bottom', textStyle: { color: '#543d3d' } },
+        tooltip: { trigger: 'focus' },
+        backgroundColor: 'white',
+        chartArea: { width: '75%', height: '65%' },
+        fontName: 'Playfair Display',
+        isStacked: false,
+        bar: { groupWidth: '60%' }
       };
 
-      const chart = new google.visualization.BarChart(document.getElementById('male_female_comparison_chart_div'));
+      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
       chart.draw(data, options);
+      
+      var chartContainer = document.querySelector('.chart-container');
+      var circularDiv = document.createElement('div');
+      circularDiv.className = 'circular-element';
+      circularDiv.textContent = '1';
+      chartContainer.appendChild(circularDiv);
     }
   </script>
 </head>
-
 <body>
-
-  <h1>Male vs Female Average Monthly Income</h1>
-  <h2>By Occupation in Bangladesh (2016)</h2>
-
+  <h1>Per Capita Economic Pulse of Bangladesh</h1>
   <div class="chart-container">
-    <div id="male_female_comparison_chart_div"></div>
-  </div>
-
-  <p>
-    This interactive chart compares the average monthly wage or salary income between men and women across different
-    occupational groups in Bangladesh, based on 2016 data. The aim is to visually highlight the gender income gap within
-    the workforce.
-  </p>
-
-  <p>
-    A smooth animation on load enhances the storytelling and viewer engagement.
-  </p>
-
+    <div id="chart_div"></div>
+    </div>
 </body>
-
 </html>
