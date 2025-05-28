@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bangladesh Economic Indicators</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f8f9fa;
+      color: #495057;
+      margin: 30px;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #343a40;
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+    .chart-container {
+      width: 95%;
+      max-width: 900px;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    }
+    #chart_div {
+      width: 100%;
+      height: 500px;
+    }
+    .google-visualization-tooltip {
+      background-color: #e9ecef !important;
+      color: #495057 !important;
+      border: 1px solid #ced4da !important;
+      padding: 12px !important;
+      border-radius: 6px !important;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15) !important;
+    }
+  </style>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawInterconnectedRings);
+
+    function drawInterconnectedRings() {
+      var data = google.visualization.arrayToDataTable([
+        ['Indicator', '2022-23', '2023-24P'],
+        ['Inflation (CPI)', 9.02, 9.73],
+        ['Exports (Million US$)', 46494.6, 44474.8],
+        ['Import Payments (Million US$)', 68600.8, 63226.16512],
+        ['Foreign Exchange Reserves (Million US$)', 31203, 26714.23645]
+      ]);
+
+      var options = {
+        title: 'Interconnected Rings: Bangladesh Economic Indicators',
+        titleTextStyle: { color: '#343a40', fontSize: 20, bold: true },
+        hAxis: {
+          title: 'Period',
+          titleTextStyle: { color: '#6c757d', italic: false },
+          gridlines: { color: '#e0e0e0' }
+        },
+        vAxis: {
+          title: 'Value',
+          titleTextStyle: { color: '#6c757d', italic: false },
+          gridlines: { color: '#e0e0e0' }
+        },
+        seriesType: 'line',
+        series: {
+          0: { type: 'line', color: '#007bff', lineWidth: 3, pointSize: 7, labelInLegend: 'Inflation (CPI)' },
+          1: { type: 'line', color: '#28a745', lineWidth: 3, pointSize: 7, labelInLegend: 'Exports' },
+          2: { type: 'line', color: '#dc3545', lineWidth: 3, pointSize: 7, labelInLegend: 'Imports' },
+          3: { type: 'line', color: '#ffc107', lineWidth: 3, pointSize: 7, labelInLegend: 'Reserves' }
+        },
+        legend: { position: 'bottom', textStyle: { color: '#495057' } },
+        tooltip: { trigger: 'focus' },
+        backgroundColor: 'white',
+        chartArea: { width: '80%', height: '60%' },
+        fontName: 'Montserrat'
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+  </script>
+</head>
+<body>
+  <h1>Bangladesh Economic Indicators</h1>
+  <div class="chart-container">
+    <div id="chart_div"></div>
+  </div>
+</body>
+</html>
